@@ -23,16 +23,16 @@ public class Main {
         System.out.println(checkSumRange(41, 13));
 
         //Проверка выполнения метода для задания 5
-        checkNumberSign(21);
+        System.out.println(checkNumberSign(21));
 
         //Проверка выполнения метода для задания 6
         System.out.println(isNegative(-24));
 
         //Проверка выполнения метода для задания 7
-        greeting("Alex");
+        System.out.println(greeting("Alex"));
 
         //Проверка выполнения для задания 8
-        checkYear(2003);
+        System.out.println(checkYear(2003));
     }
 
     /**
@@ -63,12 +63,14 @@ public class Main {
      * Задание 5. Проверить число на знак. Вывести в соответствии со знаком
      * положительное или отрицательное число.
      */
-    private static void checkNumberSign(int x) {
+    private static String checkNumberSign(int x) {
+        String resultMsg;
         if (x >= 0) {
-            System.out.println("Число " + x + " положительное");
+            resultMsg = "Число " + x + " положительное";
         } else {
-            System.out.println("Число " + x + " отрицательное");
+            resultMsg = "Число " + x + " отрицательное";
         }
+        return resultMsg;
     }
 
     /**
@@ -81,21 +83,22 @@ public class Main {
     /**
      * Задание 7. Написать приветствующий метод.
      */
-    public static void greeting(String name) {
-        System.out.println("Привет, " + name + "!");
+    public static String greeting(String name) {
+
+        return "Привет, " + name + "!";
     }
 
     /**
      * Задание 8. Написать метод, который определяет
      * является ли год високосным
      */
-    private static void checkYear(int year) {
+    private static String checkYear(int year) {
         String resultMsg = year + " не является високосным годом";
         if (year % 4 == 0) {
             if (year % 100 != 0 || year % 400 == 0) {
                 resultMsg = year + " является високосным годом";
             }
         }
-        System.out.println(resultMsg);
+        return resultMsg;
     }
 }
