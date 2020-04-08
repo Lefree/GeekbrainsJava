@@ -56,7 +56,8 @@ public class Main {
      * @param y 2-ое целое число
      */
     private static boolean checkSumRange(int x, int y) {
-        return x + y >= 10 && x + y <= 20;
+        int sum = x + y;
+        return sum >= 10 && sum <= 20;
     }
 
     /**
@@ -65,11 +66,9 @@ public class Main {
      */
     private static String checkNumberSign(int x) {
         String resultMsg;
-        if (x >= 0) {
-            resultMsg = "Число " + x + " положительное";
-        } else {
-            resultMsg = "Число " + x + " отрицательное";
-        }
+        resultMsg = x >= 0
+            ? "Число " + x + " положительное"
+            : "Число " + x + " отрицательное";
         return resultMsg;
     }
 
@@ -94,11 +93,9 @@ public class Main {
      */
     private static String checkYear(int year) {
         String resultMsg = year + " не является високосным годом";
-        if (year % 4 == 0) {
-            if (year % 100 != 0 || year % 400 == 0) {
+        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
                 resultMsg = year + " является високосным годом";
             }
-        }
         return resultMsg;
     }
 }
