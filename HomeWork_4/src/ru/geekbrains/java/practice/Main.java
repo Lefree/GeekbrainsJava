@@ -26,7 +26,7 @@ public class Main {
         for (int i = 0; i < employees.length; i++) {
             System.out.printf("ФИО: %s; Возраст: %d; Заработная плата: %d\n",
                 employees[i].getFullName(), employees[i].getAge(), employees[i].getSalary());
-            raiseSalary(employees[i]);
+            raiseSalary(employees[i], 5000);
         }
         System.out.println("After: ");
         for (int i = 0; i < employees.length; i++) {
@@ -51,8 +51,8 @@ public class Main {
      * Метод повышающий заработную плату сотрудникам старше 45 лет
      * @param emp Экземпляр класса Employee
      */
-    private static void raiseSalary(Employee emp) {
+    private static void raiseSalary(Employee emp, int bonus) {
         if (emp.getAge() > 45)
-            emp.setSalary(emp.getSalary() + 5000);
+            emp.setSalary(emp.getSalary() + bonus);
     }
 }
