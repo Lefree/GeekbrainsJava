@@ -1,6 +1,7 @@
 package ru.geekbrains.java.practice;
 
 public class Employee {
+    private static int employeeCount = 0;
     private String fullName;
     private int age;
     private int salary;
@@ -16,10 +17,7 @@ public class Employee {
         this.fullName = fullName;
         this.age = age;
         this.salary = salary;
-        int hash = 7;
-        hash = 31 * hash + this.age;
-        hash = 31 * hash + (this.fullName == null ? 0 : this.fullName.hashCode());
-        this.id = hash > 0 ? hash : -hash;
+        this.id = ++employeeCount;
     }
 
     /**
