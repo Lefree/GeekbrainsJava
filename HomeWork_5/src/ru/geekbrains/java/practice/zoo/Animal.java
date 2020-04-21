@@ -1,20 +1,34 @@
 package ru.geekbrains.java.practice.zoo;
 
+import java.util.Random;
+
 public abstract class Animal {
-    protected int runLimitation;
-    protected int swimLimitation;
-    protected float jumpLimitation;
+    protected final int SWIM_OK = 1;
+    protected final int SWIM_FAIL = 0;
+    protected final int SWIM_WTF = -1;
 
-    protected Animal(int runLimitation, int swimLimitation, float jumpLimitation) {
-        this.runLimitation = runLimitation;
-        this.swimLimitation = swimLimitation;
-        this.jumpLimitation = jumpLimitation;
+    private String type;
+    private float runLimitation;
+    private float swimLimitation;
+    private float jumpLimitation;
+    private final Random random = new Random();
+
+    protected Animal(String type, float runLimitation, float swimLimitation, float jumpLimitation) {
+        this.type = type;
+        this.runLimitation = createVariation(runLimitation);
+        this.swimLimitation = createVariation(swimLimitation);
+        this.jumpLimitation = createVariation(jumpLimitation);
     }
-
-    public int getRunLimitation() {
+    private float createVariation(float reference) {
+        return reference + random.nextFloat() * reference - (reference / 2);
+    }
+    public String getType() {
+        return this.type;
+    }
+    public float getRunLimitation() {
         return this.runLimitation;
     }
-    public int getSwimLimitation() {
+    public float getSwimLimitation() {
         return this.swimLimitation;
     }
     public float getJumpLimitation() {
@@ -30,9 +44,15 @@ public abstract class Animal {
         this.jumpLimitation = limit > 0 ? limit : 0f;
     }
 
-    public abstract void run(int distance);
-    public abstract void swim(int distance);
-    public abstract void jump(float height);
+    public boolean run(int distance) {
+        return distance <= this.runLimitation;
+    }
+    public int swim(int distance) {
+        return (distance <= this.swimLimitation) ? this.SWIM_OK : this.SWIM_FAIL;
+    }
+    public boolean jump(float height) {
+        return height <= this.jumpLimitation;
+    }
 
     public String getInfo() {
         return "Инфо \n"
