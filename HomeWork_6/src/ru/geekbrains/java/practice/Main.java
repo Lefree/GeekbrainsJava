@@ -7,11 +7,11 @@ public class Main {
     private static String absDirPath = "/home/alex/IdeaProjects/GeekbrainsJava/HomeWork_6/output/";
 
     public static void main(String[] args) {
-        mergeFiles("file_1.txt", "file_2.txt");
+//        mergeFiles("file_1.txt", "file_2.txt");
 
         System.out.println(checkTextInFile(absDirPath + "output.txt",
-                "languages in use according to GitHub"));
-        System.out.println(checkTextInDirectory(absDirPath, "java"));
+                "java"));
+//        System.out.println(checkTextInDirectory(absDirPath, "java"));
     }
 
     /**
@@ -61,13 +61,14 @@ public class Main {
         char[] textInChars = textToFind.toCharArray();
         try {
             FileInputStream fis = new FileInputStream(fileName);
-            int inputByte;
+            int inputByte = fis.read();
             int textPosition = 0;
-            while ((inputByte = fis.read()) != -1) {
+            while (inputByte != -1) {
                 if ((char) inputByte != textInChars[textPosition]) {
                     textPosition = 0;
                     continue;
                 } else textPosition++;
+                inputByte = fis.read();
                 if (textPosition == textInChars.length - 1)
                     return true;
             }
