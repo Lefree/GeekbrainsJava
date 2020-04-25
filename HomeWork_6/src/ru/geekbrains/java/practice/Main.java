@@ -1,16 +1,17 @@
 package ru.geekbrains.java.practice;
 
 import java.io.*;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Main {
     private static String absDirPath = "/home/alex/IdeaProjects/GeekbrainsJava/HomeWork_6/output/";
 
     public static void main(String[] args) {
-//        mergeFiles("file_1.txt", "file_2.txt");
+        mergeFiles("file_1.txt", "file_2.txt");
 
-        System.out.println(checkTextInFile(absDirPath + "output.txt",
-                "java"));
+        System.out.println(checkTextInFile(absDirPath + "output_3.txt",
+                "Java"));
 //        System.out.println(checkTextInDirectory(absDirPath, "java"));
     }
 
@@ -22,7 +23,7 @@ public class Main {
         File outputDirectory = new File("output");
         if (!outputDirectory.exists())
             outputDirectory.mkdir();
-        String fileName = "output" + ".txt";
+        String fileName = "output_" + Calendar.WEEK_OF_YEAR + ".txt";
         File newFile = new File(outputDirectory, fileName);
         try {
             PrintStream ps = new PrintStream(new FileOutputStream(newFile, true));
@@ -61,14 +62,13 @@ public class Main {
         char[] textInChars = textToFind.toCharArray();
         try {
             FileInputStream fis = new FileInputStream(fileName);
-            int inputByte = fis.read();
+            int inputByte;
             int textPosition = 0;
-            while (inputByte != -1) {
-                if ((char) inputByte != textInChars[textPosition]) {
+            while ((inputByte = fis.read()) != -1) {
+                if ((char) inputByte != textInChars[textPosition])
                     textPosition = 0;
-                    continue;
-                } else textPosition++;
-                inputByte = fis.read();
+                if ((char) inputByte == textInChars[textPosition])
+                    textPosition++;
                 if (textPosition == textInChars.length - 1)
                     return true;
             }
