@@ -13,6 +13,12 @@ public class Ball extends Sprite{
         halfWidth = halfHeight;
     }
 
+    Ball(int x, int y) {
+        this();
+        this.x = x;
+        this.y = y;
+    }
+
     @Override
     public void render(MainCanvas canvas, Graphics g) {
         g.setColor(color);

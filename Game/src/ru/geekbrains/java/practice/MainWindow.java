@@ -4,15 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
 
 public class MainWindow extends JFrame {
     private static int POS_X = 400;
     private static int POS_Y = 200;
     private static int WINDOW_WIDTH = 800;
     private static int WINDOW_HEIGHT = 600;
-    Sprite[] sprites = new Sprite[10];
-    Background background;
+    private Sprite[] sprites = new Sprite[1];
+    private int spritesCount;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -41,9 +40,9 @@ public class MainWindow extends JFrame {
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {
                 if (SwingUtilities.isLeftMouseButton(mouseEvent))
-                    addNewBall();
+                    addNewSprite(new Ball());
                 else
-                    removeLastBall();
+                    removeSprite();
 
             }
 
@@ -64,49 +63,38 @@ public class MainWindow extends JFrame {
     }
 
     private void initApplication() {
-        background = new Background();
-        for (int i = 0; i < sprites.length; i++) {
-            sprites[i] = new Ball();
-        }
-
+        sprites[0] = new Background();
+        spritesCount++;
     }
+
     void onDrawFrame(MainCanvas canvas, Graphics g, float deltaTime) {
         update(canvas, deltaTime);
         render(canvas, g);
     }
 
     private void update(MainCanvas canvas, float deltaTime) {
-        background.update(deltaTime);
-        for (int i = 0; i < sprites.length; i++) {
+        for (int i = 0; i < spritesCount; i++) {
             sprites[i].update(canvas, deltaTime);
         }
     }
 
     private void render(MainCanvas canvas, Graphics g) {
-        background.render(new Rectangle(canvas.getLeft(), canvas.getTop(),
-                canvas.getWidth(), canvas.getHeight()), g);
-        for (int i = 0; i < sprites.length; i++) {
+        for (int i = 0; i < spritesCount; i++) {
             sprites[i].render(canvas, g);
         }
     }
 
-    private void addNewBall() {
-        Sprite[] newSprites = new Sprite[sprites.length + 1];
-        for (int i = 0; i < sprites.length; i++) {
-            newSprites[i] = sprites[i];
+    private void addNewSprite(Sprite s) {
+        if (sprites.length == spritesCount) {
+            Sprite[] newSprites = new Sprite[sprites.length * 2];
+            System.arraycopy(sprites, 0, newSprites, 0, sprites.length);
+            sprites = newSprites;
         }
-        for (int i = sprites.length; i < newSprites.length; i++) {
-            newSprites[i] = new Ball();
-        }
-        sprites = newSprites;
+        sprites[spritesCount++] = s;
     }
 
-    private void removeLastBall() {
-        if (sprites.length > 0) {
-            Sprite[] newSprite = new Sprite[sprites.length - 1];
-            for (int i = 0; i < newSprite.length; i++)
-                newSprite[i] = sprites[i];
-            sprites = newSprite;
+    private void removeSprite() {
+        if (spritesCount > 0)
+            spritesCount--;
         }
-    }
 }
