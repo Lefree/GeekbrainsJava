@@ -1,8 +1,11 @@
-package ru.geekbrains.java.practice;
+package ru.geekbrains.java.practice.circles;
+
+import ru.geekbrains.java.practice.common.GameObject;
+import ru.geekbrains.java.practice.common.MainCanvas;
 
 import java.awt.*;
 
-public class Background extends Sprite{
+public class Background implements GameObject {
     private Color color ;
     private static final float AMPLITUDE = 255f / 2f;
     private float currentBackgroundDuration;

@@ -1,17 +1,21 @@
-package ru.geekbrains.java.practice;
+package ru.geekbrains.java.practice.circles;
+
+import ru.geekbrains.java.practice.common.GameObject;
+import ru.geekbrains.java.practice.common.MainCanvas;
+import ru.geekbrains.java.practice.common.MainCanvasListener;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame implements MainCanvasListener{
     private static int POS_X = 400;
     private static int POS_Y = 200;
     private static int WINDOW_WIDTH = 800;
     private static int WINDOW_HEIGHT = 600;
-    private Sprite[] sprites = new Sprite[1];
-    private int spritesCount;
+    private GameObject[] gameObjects = new GameObject[1];
+    private int gameObjectsCount;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
@@ -40,9 +44,9 @@ public class MainWindow extends JFrame {
             @Override
             public void mouseReleased(MouseEvent mouseEvent) {
                 if (SwingUtilities.isLeftMouseButton(mouseEvent))
-                    addNewSprite(new Ball());
+                    addGameObject(new Ball());
                 else
-                    removeSprite();
+                    removeGameObject();
 
             }
 
@@ -63,38 +67,38 @@ public class MainWindow extends JFrame {
     }
 
     private void initApplication() {
-        sprites[0] = new Background();
-        spritesCount++;
+        gameObjects[0] = new Background();
+        gameObjectsCount++;
     }
 
-    void onDrawFrame(MainCanvas canvas, Graphics g, float deltaTime) {
+    public void onDrawFrame(MainCanvas canvas, Graphics g, float deltaTime) {
         update(canvas, deltaTime);
         render(canvas, g);
     }
 
     private void update(MainCanvas canvas, float deltaTime) {
-        for (int i = 0; i < spritesCount; i++) {
-            sprites[i].update(canvas, deltaTime);
+        for (int i = 0; i < gameObjectsCount; i++) {
+            gameObjects[i].update(canvas, deltaTime);
         }
     }
 
     private void render(MainCanvas canvas, Graphics g) {
-        for (int i = 0; i < spritesCount; i++) {
-            sprites[i].render(canvas, g);
+        for (int i = 0; i < gameObjectsCount; i++) {
+            gameObjects[i].render(canvas, g);
         }
     }
 
-    private void addNewSprite(Sprite s) {
-        if (sprites.length == spritesCount) {
-            Sprite[] newSprites = new Sprite[sprites.length * 2];
-            System.arraycopy(sprites, 0, newSprites, 0, sprites.length);
-            sprites = newSprites;
+    private void addGameObject(GameObject s) {
+        if (gameObjects.length == gameObjectsCount) {
+            GameObject[] temp = new GameObject[gameObjects.length * 2];
+            System.arraycopy(gameObjects, 0, temp, 0, gameObjects.length);
+            gameObjects = temp;
         }
-        sprites[spritesCount++] = s;
+        gameObjects[gameObjectsCount++] = s;
     }
 
-    private void removeSprite() {
-        if (spritesCount > 0)
-            spritesCount--;
+    private void removeGameObject() {
+        if (gameObjectsCount > 0)
+            gameObjectsCount--;
         }
 }

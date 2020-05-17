@@ -1,8 +1,6 @@
-package ru.geekbrains.java.practice;
+package ru.geekbrains.java.practice.common;
 
-import java.awt.*;
-
-public abstract class Sprite {
+public abstract class Sprite implements GameObject{
     protected float x;
     protected float y;
     protected float halfWidth;
@@ -47,8 +45,4 @@ public abstract class Sprite {
     protected float getHeight() {
         return 2f * halfHeight;
     }
-
-    public void update(MainCanvas canvas, float deltaTime) {}
-
-    public void render(MainCanvas canvas, Graphics g) {}
 }

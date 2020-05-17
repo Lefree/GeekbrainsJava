@@ -1,8 +1,11 @@
-package ru.geekbrains.java.practice;
+package ru.geekbrains.java.practice.circles;
+
+import ru.geekbrains.java.practice.common.MainCanvas;
+import ru.geekbrains.java.practice.common.Sprite;
 
 import java.awt.*;
 
-public class Ball extends Sprite{
+public class Ball extends Sprite {
     Color color =  new Color((int)(Math.random() * 255),
             (int)(Math.random() * 255),
             (int)(Math.random() * 255));

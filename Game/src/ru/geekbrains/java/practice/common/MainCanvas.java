@@ -1,13 +1,15 @@
-package ru.geekbrains.java.practice;
+package ru.geekbrains.java.practice.common;
+
+import ru.geekbrains.java.practice.circles.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainCanvas extends JPanel {
-    MainWindow gameController;
+    MainCanvasListener gameController;
     long lastFrame;
 
-    MainCanvas(MainWindow gameController) {
+    public MainCanvas(MainCanvasListener gameController) {
         this.gameController = gameController;
         lastFrame = System.nanoTime();
     }
