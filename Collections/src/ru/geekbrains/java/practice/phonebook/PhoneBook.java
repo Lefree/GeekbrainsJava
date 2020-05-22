@@ -54,13 +54,13 @@ public class PhoneBook {
     }
 
     public ArrayList<String> getPhonesByLastName(String lastName) throws NullPointerException{
-        if (!cache.lastName.equals(lastName))
+        if (cache == null || !cache.lastName.equals(lastName))
             findContacts(lastName);
         return cache.phones;
     }
 
     public ArrayList<String> getEmailsByLastName(String lastName) throws NullPointerException {
-        if (!cache.lastName.equals(lastName))
+        if (cache == null || !cache.lastName.equals(lastName))
             findContacts(lastName);
         return cache.emails;
     }
