@@ -19,16 +19,16 @@ public class PhoneBook {
         }
     }
 
-    HashMap<String, LinkedList<Person.Contacts>> book;
+    HashMap<String, LinkedList<Person>> book;
     SearchCache cache;
     public PhoneBook() {
         this.book = new HashMap<>();
     }
     public void addContact(Person p) {
         if (book.get(p.getLastName()) != null)
-            book.get(p.getLastName()).add(p.getContacts());
+            book.get(p.getLastName()).add(p);
         else
-            book.put(p.getLastName(), new LinkedList<Person.Contacts>(Arrays.asList(p.getContacts())));
+            book.put(p.getLastName(), new LinkedList<Person>(Arrays.asList(p)));
     }
 
     public void addContact(String lastName, String phoneNumber, String email) {
@@ -42,11 +42,11 @@ public class PhoneBook {
     private void findContacts(String lastName) throws NullPointerException{
         cache = new SearchCache(lastName);
         try {
-            for(Person.Contacts c : book.get(lastName)) {
+            for(Person c : book.get(lastName)) {
                 if(!c.getPhoneNumber().equals(""))
                     cache.phones.add(c.getPhoneNumber());
-                if (!c.getEmail().equals(""))
-                    cache.emails.add(c.getEmail());
+                if (!c.getMail().equals(""))
+                    cache.emails.add(c.getMail());
             }
         } catch (NullPointerException e) {
             throw new NullPointerException("Not found any data by this lastname");
