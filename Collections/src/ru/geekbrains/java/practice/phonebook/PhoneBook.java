@@ -25,7 +25,7 @@ public class PhoneBook {
         this.book = new HashMap<>();
     }
     public void addContact(Person p) {
-        if (book.get(p.getLastName()) != null)
+        if (book.containsKey(p.getLastName()))
             book.get(p.getLastName()).add(p);
         else
             book.put(p.getLastName(), new LinkedList<Person>(Arrays.asList(p)));
