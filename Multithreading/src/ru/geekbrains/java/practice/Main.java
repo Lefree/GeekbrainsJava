@@ -16,9 +16,15 @@ public class Main {
     }
 
     private static void updateArray(float[] array) {
+        updateArray(array, 0);
+    }
+
+    private static void updateArray(float[] array, int offset) {
         for (int i = 0; i < array.length; i++)
-            array[i] = (float)(array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5)
-                * Math.cos(0.4f + i / 2));
+            array[i] = (float)(array[i]
+                    * Math.sin(0.2f + (i + offset) / 5)
+                    * Math.cos(0.2f + (i + offset) / 5)
+                    * Math.cos(0.4f + (i + offset) / 2));
     }
 
     private static float getWorkTimeWithoutThreads() {
@@ -36,19 +42,18 @@ public class Main {
         int arraySize = size / threadsNumber;
         for (int i = 0; i < threadsNumber; i++) {
             arrays.add(new float[arraySize]);
-            threads.add(new ArrayUpdateThread("Thread--0" + (i+1), arrays.get(i)));
+            System.arraycopy(arr, 0, arrays.get(i), 0, arraySize);
+            threads.add(new ArrayUpdateThread("Thread--0" + (i+1),
+                    arrays.get(i), i * arraySize));
         }
         long threadsTime = System.currentTimeMillis();
-        for (int i = 0; i < threadsNumber; i++) {
-            System.arraycopy(arr, 0, arrays.get(i), 0, arraySize);
-        }
 
         for (int i = 0; i < threads.size(); i++)
             threads.get(i).start();
         try {
             for (int i = 0; i < threads.size(); i++) {
                 threads.get(i).join();
-                System.arraycopy(arrays.get(i), 0, arr, 0, arraySize);
+                System.arraycopy(arrays.get(i), 0, arr, i * arraySize, arraySize);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -57,16 +62,18 @@ public class Main {
         return threadsDeltaTime;
     }
     static class ArrayUpdateThread extends Thread{
-        float[] array;
+        private float[] array;
+        private int offset;
 
-        ArrayUpdateThread(String name, float[] arr) {
+        ArrayUpdateThread(String name, float[] arr, int offset) {
             super(name);
             this.array = arr;
+            this.offset = offset;
         }
 
         public void run() {
             System.out.printf("%s started its work\n", getName());
-            updateArray(array);
+            updateArray(array, offset);
             System.out.printf("%s finished its work\n", getName());
         }
     }
