@@ -7,7 +7,6 @@ public class Main {
 
     static final int size = 10000000;
     static final int threadsNumber = 2;
-    static final int h = size / 2;
     static float[] arr = new float[size];
 
     public static void main(String[] args) {
@@ -43,7 +42,7 @@ public class Main {
         for (int i = 0; i < threadsNumber; i++) {
             System.arraycopy(arr, 0, arrays.get(i), 0, arraySize);
         }
-        
+
         for (int i = 0; i < threads.size(); i++)
             threads.get(i).start();
         try {
